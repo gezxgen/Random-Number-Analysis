@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 /* defines */
 #define ARRAY_SIZE 100000
@@ -11,12 +12,20 @@ void print_stats(int *p);
 
 /* main */
 int main(int argc, char *argv[]) {
-        /* nichts, -p, --print, -h, --help */
+        /* Get length of strings */
         int size = 0;
-        if (argc == 4) {
-                printf("4 args");
+        int len[argc];
+        for (int i=1; i<=argc; i++) {
+                len[i] = strlen(argv[i]);
+                printf("%d\n", len[i]);
+        }
+
+        /* Switch case to get command-line arguments */
+        /* nichts, -p, --print, -h, --help */
+        switch (argc) {
+        case 1:
                 size = ARRAY_SIZE;
-        } else {
+        default:
                 size = ARRAY_SIZE;
         }
 
