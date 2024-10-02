@@ -4,13 +4,22 @@
 #include <time.h>
 
 /* defines */
-#define ARRAY_SIZE 10000
+#define ARRAY_SIZE 100000
 
 /* functions */
 void print_stats(int *p);
 
 /* main */
-int main(void) {
+int main(int argc, char *argv[]) {
+        /* nichts, -p, --print, -h, --help */
+        int size = 0;
+        if (argc == 4) {
+                printf("4 args");
+                size = ARRAY_SIZE;
+        } else {
+                size = ARRAY_SIZE;
+        }
+
         /* init */
         int array[ARRAY_SIZE];
         int *p = &array[0];
