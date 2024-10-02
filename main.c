@@ -3,34 +3,55 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#import <conio.h>
 
 /* defines */
 #define ARRAY_SIZE 100000
 
 /* functions */
 void print_stats(int *p);
+void send_message(void);
+
 
 /* main */
 int main(int argc, char *argv[]) {
         /* Get length of strings */
         int size = 0;
-        int len[argc];
-        for (int i=1; i<=argc; i++) {
-                len[i] = strlen(argv[i]);
-                printf("%d\n", len[i]);
-        }
 
         /* Switch case to get command-line arguments */
-        /* nichts, -p, --print, -h, --help */
-        switch (argc) {
-        case 1:
-                size = ARRAY_SIZE;
-        default:
-                size = ARRAY_SIZE;
+        if (argc == 1) {
+            size = ARRAY_SIZE;
+        } else {
+            if ((strcmp(argv[1], "-h") == 0) || (strcmp(argv[1], "--help") == 0)) {
+                send_message();
+                getch();
+                exit(0);
+            } else if ((strcmp(argv[1], "-p") == 0) || (strcmp(argv[1], "--print") == 0)) {
+                if (argc >= 3) {
+                    char *p;
+                    long answer = strtol(argv[2], &p, 10);
+                    if (*p != '\0') {
+                        printf("Invalid characters found after number: %c\n", *p);
+                        send_message();
+                        getch();
+                        exit(0);
+                    } else {
+                        size = (int)answer;
+                    }
+                } else {
+                    send_message();
+                    getch();
+                    exit(0);
+                }
+            } else {
+                send_message();
+                getch();
+                exit(0);
+            }
         }
 
         /* init */
-        int array[ARRAY_SIZE];
+        int array[size];
         int *p = &array[0];
         srand(time(NULL));   // Initialization, should only be called once.
 
@@ -40,7 +61,7 @@ int main(int argc, char *argv[]) {
         }
 
         /* calculate random numbers */
-        for (int i=0; i<ARRAY_SIZE; i++) {
+        for (int i=0; i<size; i++) {
                 array[rand() % 50] += 1;
         }
 
@@ -63,4 +84,13 @@ void print_stats(int *p) {
                         printf("\n");
                 }
         }
+}
+
+/* send help message for user */
+void send_message() {
+    printf("With this program you can test if random numbers are actually random.\n");
+    printf("If you want you can give the test size as input.\n");
+    printf("If you give no input however a value of %d will be taken.\n", ARRAY_SIZE);
+    printf("Example input: main.c -p 1000\n");
+    printf("Example input: main.c --print 50000\n");
 }
