@@ -7,9 +7,6 @@
 
 /* defines */
 #define ARRAY_SIZE 100000
-#define AE 132
-#define OE 148
-#define UE 129
 #define PERCENT 37
 
 /* functions */
@@ -107,7 +104,7 @@ void print_stats(int *p, int k) {
 void print_times(double *q, int j) {
     printf("------------------------- Timestamps -------------------------\n");
     for (int i=0; i<j; i++) {
-        printf("Zeit f%cr %d%c:\t%.3fs\n", UE, (i+1)*10, PERCENT, *q);
+        printf("Time for %d%c:\t%.3fs\n", (i+1)*10, PERCENT, *q);
         q += 1;
     }
     printf("----------------------------------------------------------\n");
