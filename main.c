@@ -13,7 +13,7 @@
 #define PERCENT 37
 
 /* functions */
-void print_stats(int *p);
+void print_stats(int *p, int k);
 void send_message(void);
 void print_times(double *q, int j);
 
@@ -78,25 +78,25 @@ int main(int argc, char *argv[]) {
                 system("cls");
                 time = clock();
                 times[j] = (((double)time)/CLOCKS_PER_SEC) - times[j-1];
-                print_stats(p);
+                print_stats(p, i);
                 print_times(q, j+1);
             }
             array[rand() % 50] += 1;
         }
 
-        char ret = 'A';
-        ret = getch();
+        char ret = getch();
         return 0;
 }
 
 /* print the generated stats */
-void print_stats(int *p) {
+void print_stats(int *p, int k) {
     printf("------------------------- Statistik -------------------------\n");
     for (int i=0; i<50; i++) {
         if (i < 9) {
             printf("0");
         }
-        printf("%d: %d\t\t", i+1, *p);
+
+        printf("%d: %d (%.3f%c)\t", i+1, *p, 100*((float)*p)/((float)k), PERCENT);
         p += 1;
         if ((i+1) % 5 == 0) {
             printf("\n");
