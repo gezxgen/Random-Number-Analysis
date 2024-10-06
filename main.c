@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 
 /* print the generated stats */
 void print_stats(int *p, int k) {
-    printf("------------------------- Statistik -------------------------\n");
+    printf("------------------------- Statistics -------------------------\n");
     for (int i=0; i<50; i++) {
         if (i < 9) {
             printf("0");
@@ -105,7 +105,7 @@ void print_stats(int *p, int k) {
 }
 
 void print_times(double *q, int j) {
-    printf("------------------------- Zeiten -------------------------\n");
+    printf("------------------------- Timestamps -------------------------\n");
     for (int i=0; i<j; i++) {
         printf("Zeit f%cr %d%c:\t%.3fs\n", UE, (i+1)*10, PERCENT, *q);
         q += 1;
