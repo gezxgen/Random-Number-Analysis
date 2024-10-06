@@ -7,10 +7,15 @@
 
 /* defines */
 #define ARRAY_SIZE 100000
+#define AE 132
+#define OE 148
+#define UE 129
+#define PERCENT 37
 
 /* functions */
 void print_stats(int *p);
 void send_message(void);
+void print_times(double *q, int j);
 
 
 /* main */
@@ -53,37 +58,59 @@ int main(int argc, char *argv[]) {
         /* init */
         int array[size];
         int *p = &array[0];
+        double times[10];
+        double *q = &times[0];
         srand(time(NULL));   // Initialization, should only be called once.
+        clock_t time;
 
         /* set values to 0 */
         for (int i=0; i<50; i++) {
-                array[i] = 0;
+            if (i < 10) {
+                times[i] = 0;
+            }
+            array[i] = 0;
         }
 
         /* calculate random numbers */
-        for (int i=0; i<size; i++) {
-                array[rand() % 50] += 1;
+        for (int i=0; i<=size; i++) {
+            if (i && i % (size/10) == 0) {
+                int j = i / (size/10) - 1;
+                system("cls");
+                time = clock();
+                times[j] = (((double)time)/CLOCKS_PER_SEC) - times[j-1];
+                print_stats(p);
+                print_times(q, j+1);
+            }
+            array[rand() % 50] += 1;
         }
 
-        print_stats(p);
-
         char ret = 'A';
-        scanf("%c", &ret);
+        ret = getch();
         return 0;
 }
 
 /* print the generated stats */
 void print_stats(int *p) {
-        for (int i=0; i<50; i++) {
-                if (i < 9) {
-                        printf("0");
-                }
-                printf("%d: %d\t\t", i+1, *p);
-                p += 1;
-                if ((i+1) % 5 == 0) {
-                        printf("\n");
-                }
+    printf("------------------------- Statistik -------------------------\n");
+    for (int i=0; i<50; i++) {
+        if (i < 9) {
+            printf("0");
         }
+        printf("%d: %d\t\t", i+1, *p);
+        p += 1;
+        if ((i+1) % 5 == 0) {
+            printf("\n");
+        }
+    }
+}
+
+void print_times(double *q, int j) {
+    printf("------------------------- Zeiten -------------------------\n");
+    for (int i=0; i<j; i++) {
+        printf("Zeit f%cr %d%c:\t%.3fs\n", UE, (i+1)*10, PERCENT, *q);
+        q += 1;
+    }
+    printf("----------------------------------------------------------\n");
 }
 
 /* send help message for user */
